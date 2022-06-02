@@ -1,0 +1,29 @@
+{
+  "name": "generator-banbeis-blog",
+  "version": "1.0.0",
+  "description": "A generator for generating banbeis-blog application components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "entity"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monjurmorshed793/generator-banbeis-blog.git"
+  },
+  "keywords": [
+    "generators",
+    "banbeis-blog"
+  ],
+  "author": "Monjur-E-Morshed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monjurmorshed793/generator-banbeis-blog/issues"
+  },
+  "homepage": "https://github.com/monjurmorshed793/generator-banbeis-blog#readme",
+  "dependencies": {
+    "yeoman-generator": "^5.6.1"
+  }
+}
