@@ -17,7 +17,31 @@ module.exports = class extends Generator{
                 type: "input",
                 name: "name",
                 message: "Your entity name"
-            }
+            },
+            {
+                type: "input",
+                name: "package-directory",
+                message: "Entity directory for model",
+                store: true
+            },
+            {
+                type: "input",
+                name: "repository-directory",
+                message: "Repository directory for model",
+                store: true
+            },
+            {
+                type: "input",
+                name: "service-directory",
+                message: "Service directory for model",
+                store: true
+            },
+            {
+                type: "input",
+                name: "controller-directory",
+                message: "Controller directory for model",
+                store: true
+            },
         ]);
 
         this.addField = await this.prompt([
