@@ -109,20 +109,21 @@ module.exports = class extends Generator{
     end(){
         this.log('writing entity');
         this._writeEntity();
+        this._writeRepository();
     }
 
 
 
     _writeEntity(){
-        const entityPackage =  this.entity.modelDirectory;
-        const modelName = this.entity.name;
+        this.entityPackage =  this.entity.modelDirectory;
+        this.modelName = this.entity.name;
         this._createModelImportedPackage();
         this._createModelFields();
 
 
-        let directory = entityPackage.split(".").join("\\")
+        let directory = this.entityPackage.split(".").join("\\")
         directory = directory+"\\";
-        directory = directory+modelName+".java";
+        directory = directory+this.modelName+".java";
         // this.projectRootDirectory = this.projectRootDirectory.replace("/",'');
         this.log(directory);
 
@@ -130,9 +131,9 @@ module.exports = class extends Generator{
             this.templatePath('entity.java'),
             this.destinationPath(directory),
             {
-                modelPackage: entityPackage,
+                modelPackage: this.entityPackage,
                 modelImportedPackages: this.modelImportedPackages,
-                modelName: modelName,
+                modelName: this.modelName,
                 modelFields: this.modelFields
             }
         );
@@ -157,7 +158,21 @@ module.exports = class extends Generator{
     }
 
     _writeRepository(){
-
+        this.repositoryPackage =  this.entity.repositoryDirectory;
+        let directory = this.repositoryPackage.split(".").join("\\")
+        directory = directory+"\\";
+        directory = directory+this.modelName+"Repository.java";
+        this.fs.copyTpl(
+            this.templatePath('entity-repository.java'),
+            this.destinationPath(directory),
+            {
+                repositoryPackage: this.repositoryPackage,
+                entityPackage: this.entityPackage,
+                modelImportedPackages: this.modelImportedPackages,
+                modelName: this.modelName,
+                modelFields: this.modelFields
+            }
+        );
     }
 
 }
