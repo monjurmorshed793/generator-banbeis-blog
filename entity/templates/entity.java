@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 <% for (const modelPackage of modelImportedPackages) { _%>
-    <%= modelPackage %>
+    <%= modelPackage %>;
 <% } _%>
 
 
@@ -16,6 +16,6 @@ import org.springframework.data.annotation.Id;
 public class <%= modelName %>{
     @Id
 <% for (const modelField of modelFields) { _%>
-    <%= modelField %>
+    <%- modelField %>
 <% } _%>
 }

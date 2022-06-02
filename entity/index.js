@@ -140,7 +140,7 @@ module.exports = class extends Generator{
 
     _createModelImportedPackage(){
         this.fields.forEach(f=>{
-           if(f.type.includes("List") && !this.modelImportedPackages.contains("import java.util.List")){
+           if(f.type.includes("List") && !this.modelImportedPackages.includes("import java.util.List")){
                 this.modelImportedPackages.push("import java.util.List");
            }
         });
