@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/monjurmorshed793/generator-banbeis-blog#readme",
   "dependencies": {
+    "gulp-beautify": "^3.0.0",
     "yeoman-generator": "^5.6.1"
   }
 }
