@@ -51,7 +51,7 @@ module.exports = class extends Generator{
                 choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob']
             },
             {
-                type: "confirmation",
+                type: "confirm",
                 name: "required",
                 message: "Is it required?"
             }
