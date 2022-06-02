@@ -1,4 +1,4 @@
-package <%= package %>
+package <%= modelPackage %>;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 <% for (const modelPackage of modelImportedPackages) { _%>
     <%= modelPackage %>
 <% } _%>
+
+
 @Document("<%= modelName %>")
 @Data
 @Builder
@@ -15,6 +17,5 @@ public class <%= modelName %>{
     @Id
 <% for (const modelField of modelFields) { _%>
     <%= modelField %>
-
 <% } _%>
 }

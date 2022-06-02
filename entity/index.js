@@ -1,5 +1,5 @@
 var Generator = require('yeoman-generator')
-var beautify = require("gulp-beautify");
+const {modelFields} = require("./index");
 
 var fields = {};
 var entity = {};
@@ -10,11 +10,9 @@ module.exports = class extends Generator{
         super(args, opts);
 
 
-
         this.fields = [];
         this.projectRootDirectory = 'src/main/java/';
         this.modelImportedPackages = [];
-        this.modelFields = [];
         this.option('entity');
         this.config.save();
     }
@@ -66,82 +64,82 @@ module.exports = class extends Generator{
         this.log(this.fields);
         if(this.addField.confirmation){
             this._addFieldName();
-        }else{
-            this._writeEntity();
         }
     }
 
-    write(){
-
-    }
-
      async _addFieldName(){
-        const fieldInfo = await this.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Field name"
-            },
-            {
-                type: "list",
-                name: "type",
-                message: "What is the field type?",
-                choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
-            },
-            {
-                type: "confirm",
-                name: "required",
-                message: "Is it required?"
+        var done = this.async();
+        while(true){
+            const fieldInfo = await this.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Field name"
+                },
+                {
+                    type: "list",
+                    name: "type",
+                    message: "What is the field type?",
+                    choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
+                },
+                {
+                    type: "confirm",
+                    name: "required",
+                    message: "Is it required?"
+                }
+            ]);
+
+            this.fields.push(fieldInfo);
+
+            this.addField = await this.prompt([
+                {
+                    type: 'confirm',
+                    name: 'confirmation',
+                    message: 'Want to add a field?'
+                }
+            ]);
+            if(!this.addField.confirmation){
+                done();
+                break;
             }
-        ]);
+        }
 
-        this.fields.push(fieldInfo);
-
-        this.addField = await this.prompt([
-             {
-                 type: 'confirm',
-                 name: 'confirmation',
-                 message: 'Want to add a field?'
-             }
-         ]);
-        this.fieldPrompt();
     }
 
+    end(){
+        this.log('writing entity');
+        this._writeEntity();
+    }
 
 
 
     _writeEntity(){
-        const entityPackage =  this.entity.modelDirectory.replace("/",".");
-        this.log(entityPackage);
+        const entityPackage =  this.entity.modelDirectory;
         const modelName = this.entity.name;
         this._createModelImportedPackage();
         this._createModelFields();
 
-        // this.fs.write(this.projectRootDirectory+this.entity.model-directory+"/"+modelName+".java", "");
 
-        this.log("Writing");
-        this.log("Destination path");
-        this.log(this.sourceRoot());
-        this.projectRootDirectory = this.sourceRoot()+"/"+this.entity.modelDirectory+"/"+modelName+".java";
+        let directory = entityPackage.split(".").join("\\")
+        directory = directory+"\\";
+        directory = directory+modelName+".java";
         // this.projectRootDirectory = this.projectRootDirectory.replace("/",'');
-        this.log(this.projectRootDirectory+this.entity.modelDirectory+"/"+modelName+".java")
+        this.log(directory);
+
         this.fs.copyTpl(
             this.templatePath('entity.java'),
-            this.destinationPath(this.sourceRoot()+"/"+this.entity.modelDirectory+"/"+modelName+".java"),
+            this.destinationPath(directory),
             {
-                package: entityPackage,
+                modelPackage: entityPackage,
                 modelImportedPackages: this.modelImportedPackages,
                 modelName: modelName,
                 modelFields: this.modelFields
             }
         );
-        this.log("Writing done");
     }
 
     _createModelImportedPackage(){
         this.fields.forEach(f=>{
-            this.log('in the create model imported package');
-            this.log(f);
            if(f.type.includes("List") && !this.modelImportedPackages.contains("import java.util.List")){
                 this.modelImportedPackages.push("import java.util.List");
            }
@@ -149,9 +147,13 @@ module.exports = class extends Generator{
     }
 
     _createModelFields(){
+        this.modelFields = [];
         this.fields.forEach(f=>{
-            this.modelFields.push("private "+f.type+" "+f.name);
+            this.log(f);
+            this.modelFields.push("private "+f.type+" "+f.name+";");
         });
+        this.log(this.modelFields);
+        this.log("------------");
     }
 
     _writeRepository(){
