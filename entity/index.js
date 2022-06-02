@@ -72,7 +72,7 @@ module.exports = class extends Generator{
                 type: "list",
                 name: "type",
                 message: "What is the field type?",
-                choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob']
+                choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
             },
             {
                 type: "confirm",
