@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public interface CommonController <E extends CommonEntity, ID>{
+public interface CommonController <E, ID>{
    public ResponseEntity<E>  create(final HttpServletRequest httpServletRequest,  E entity);
 
    public ResponseEntity<E> update(final HttpServletRequest httpServletRequest, E entity);

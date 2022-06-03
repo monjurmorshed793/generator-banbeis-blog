@@ -1,8 +1,8 @@
-package <%= entityPackage %>;
+package <%= entity.repositoryDirectory %>;
 
-import <%= entityPackage %>.<%= modelName %>;
+import <%= entity.modelDirectory %>.<%= entity.name %>;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface <%= modelName%>Repository extends MongoRepository<<%= modelName %>, String>{
+public interface <%= entity.name %>Repository extends MongoRepository<<%= entity.name %>, String>{
 
 }

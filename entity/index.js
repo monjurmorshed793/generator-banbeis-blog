@@ -164,7 +164,8 @@ module.exports = class extends Generator{
                 modelPackage: this.entityPackage,
                 modelImportedPackages: this.modelImportedPackages,
                 modelName: this.modelName,
-                modelFields: this.modelFields
+                modelFields: this.modelFields,
+                entity: this.entity
             }
         );
     }
@@ -200,7 +201,8 @@ module.exports = class extends Generator{
                 entityPackage: this.entityPackage,
                 modelImportedPackages: this.modelImportedPackages,
                 modelName: this.modelName,
-                modelFields: this.modelFields
+                modelFields: this.modelFields,
+                entity: this.entity
             }
         );
     }
@@ -226,13 +228,19 @@ module.exports = class extends Generator{
             this.destinationPath(directory),
             {
                 entity: this.entity,
-                convertToLowercase: this._convertToLowercase
+                fields: this.fields,
+                convertToLowercase: this._convertToLowercase,
+                firstLetterUpperCase: this._firstLetterUpperCase
             }
         );
     }
 
     _convertToLowercase(str){
         return str.toLowerCase();
+    }
+
+    _firstLetterUpperCase(str){
+        return str.charAt(0).toUpperCase()+ str.slice(1);
     }
 
 }
