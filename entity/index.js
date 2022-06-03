@@ -22,7 +22,8 @@ module.exports = class extends Generator{
             {
                 type: "input",
                 name: "name",
-                message: "Your entity name"
+                message: "Your entity name",
+                default: "Navigation"
             },
             {
                 type: "input",
@@ -125,6 +126,7 @@ module.exports = class extends Generator{
         this.log('writing entity');
         this._writeEntity();
         this._writeRepository();
+        this._writeService();
     }
 
 
@@ -181,13 +183,30 @@ module.exports = class extends Generator{
             this.templatePath('entity-repository.java'),
             this.destinationPath(directory),
             {
-                repositoryPackage: this.repositoryPackage,
+                repositoryPackage: this.entity.repositoryDirectory,
                 entityPackage: this.entityPackage,
                 modelImportedPackages: this.modelImportedPackages,
                 modelName: this.modelName,
                 modelFields: this.modelFields
             }
         );
+    }
+
+    _writeService(){
+
+        const directory = this.serviceDirectory+"/"+this.modelName+"Service.java";
+        this.fs.copyTpl(
+            this.templatePath('service/entity-service.java'),
+            this.destinationPath(directory),
+            {
+                entity: this.entity,
+                convertToLowercase: this._convertToLowercase
+            }
+        );
+    }
+
+    _convertToLowercase(str){
+        return str.toLowerCase();
     }
 
 }
