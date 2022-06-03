@@ -27,25 +27,25 @@ module.exports = class extends Generator{
             {
                 type: "input",
                 name: "modelDirectory",
-                message: "Entity directory for model",
+                message: "Entity package for model",
                 store: true
             },
             {
                 type: "input",
                 name: "repositoryDirectory",
-                message: "Repository directory for model",
+                message: "Repository package for model",
                 store: true
             },
             {
                 type: "input",
                 name: "serviceDirectory",
-                message: "Service directory for model",
+                message: "Service package for model",
                 store: true
             },
             {
                 type: "input",
                 name: "controllerDirectory",
-                message: "Controller directory for model",
+                message: "Controller package for model",
                 store: true
             },
         ]);
