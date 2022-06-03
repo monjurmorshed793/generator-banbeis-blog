@@ -139,6 +139,7 @@ module.exports = class extends Generator{
         this._writeEntity();
         this._writeRepository();
         this._writeService();
+        this._writeControllers();
     }
 
 
@@ -209,6 +210,19 @@ module.exports = class extends Generator{
         const directory = this.serviceDirectory+"/"+this.modelName+"Service.java";
         this.fs.copyTpl(
             this.templatePath('service/entity-service.java'),
+            this.destinationPath(directory),
+            {
+                entity: this.entity,
+                convertToLowercase: this._convertToLowercase
+            }
+        );
+    }
+
+    _writeControllers(){
+        const directory = this.controllerDirectory+"/"+this.modelName+"Controller.java";
+
+        this.fs.copyTpl(
+            this.templatePath('rest/entity-controller.java'),
             this.destinationPath(directory),
             {
                 entity: this.entity,
