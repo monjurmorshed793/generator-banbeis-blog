@@ -112,12 +112,24 @@ module.exports = class extends Generator{
         this.serviceDirectory = 'src/main/java/'+ this.entity.serviceDirectory;
         this.serviceDirectory = this.serviceDirectory.split(".").join("\/");
 
+        this.controllerDirectory = "src/main/java/"+ this.entity.controllerDirectory;
+        this.controllerDirectory = this.controllerDirectory.split(".").join("\/");
+
 
         this.fs.copyTpl(
             this.templatePath('service/CommonService.java'),
             this.destinationPath(this.serviceDirectory+"/CommonService.java"),
             {
                 servicePackage: this.entity.serviceDirectory
+            }
+        );
+
+
+        this.fs.copyTpl(
+            this.templatePath('rest/CommonController.java'),
+            this.destinationPath(this.controllerDirectory+"/CommonController.java"),
+            {
+                entity: this.entity
             }
         );
     }
