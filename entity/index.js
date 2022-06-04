@@ -95,11 +95,11 @@ module.exports = class extends Generator{
             this.addField = await this.prompt([
                 {
                     type: 'confirm',
-                    name: 'confirmation',
+                    name: 'fieldConfirmation',
                     message: 'Want to add a field?'
                 }
             ]);
-            if(!this.addField.confirmation){
+            if(!this.addField.fieldConfirmation){
                 done();
                 break;
             }
