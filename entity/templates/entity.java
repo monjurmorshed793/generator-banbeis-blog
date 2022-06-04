@@ -19,7 +19,7 @@ import <%= entity.modelDirectory %>.helper.LanguageType;
 public class <%= modelName %>{
     @Id
     private String id;
-<% for (const modelField of modelFields) { _%>
-    <%- modelField %>
+<% for (const modelField of fields) { _%>
+    private <%- modelField.type %> <%- modelField.fieldName %>;
 <% } _%>
 }

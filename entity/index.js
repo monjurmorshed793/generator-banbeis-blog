@@ -51,19 +51,19 @@ module.exports = class extends Generator{
             },
         ]);
 
-        this.addField = await this.prompt([
+/*        this.addField = await this.prompt([
             {
                 type: 'confirm',
                 name: 'confirmation',
                 message: 'Want to add a field?'
             }
-        ]);
+        ]);*/
     }
 
     fieldPrompt(){
         this.log('fields--->');
         this.log(this.fields);
-        if(this.addField.confirmation){
+        if(!this.addField || this.addField.addFieldConfirmation){
             this._addFieldName();
         }
     }
@@ -74,7 +74,7 @@ module.exports = class extends Generator{
             const fieldInfo = await this.prompt([
                 {
                     type: "input",
-                    name: "name",
+                    name: "fieldName",
                     message: "Field name"
                 },
                 {
@@ -95,11 +95,11 @@ module.exports = class extends Generator{
             this.addField = await this.prompt([
                 {
                     type: 'confirm',
-                    name: 'confirmation',
+                    name: 'addFieldConfirmation',
                     message: 'Want to add a field?'
                 }
             ]);
-            if(!this.addField.confirmation){
+            if(!this.addField.addFieldConfirmation){
                 done();
                 break;
             }

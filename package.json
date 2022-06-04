@@ -4,7 +4,7 @@
   "description": "A generator for generating banbeis-blog application components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha './**/*.spec.js'"
   },
   "files": [
     "entity"
@@ -29,9 +29,9 @@
     "yeoman-generator": "^5.6.1"
   },
   "devDependencies": {
-    "mocha": "^10.0.0"
-  },
-  "scripts": {
-    "test": "mocha './**/*.spec.js'"
+    "fs-extra": "^10.1.0",
+    "mocha": "^10.0.0",
+    "yeoman-environment": "^3.9.1",
+    "yeoman-test": "^6.3.0"
   }
 }

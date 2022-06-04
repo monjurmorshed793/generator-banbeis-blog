@@ -51,8 +51,8 @@ public class <%= entity.name %>Controller implements CommonController<<%= entity
                 .getById(entity.getId())
                 .map(existing<%= entity.name %>->{
            <%_ for (const field of fields) { _%>
-                 if(entity.get<%- firstLetterUpperCase(field.name) %>() !=null )
-                      existing<%= entity.name %>.set<%- firstLetterUpperCase(field.name) %>(entity.get<%- firstLetterUpperCase(field.name) %>());
+                 if(entity.get<%- firstLetterUpperCase(field.fieldName) %>() !=null )
+                      existing<%= entity.name %>.set<%- firstLetterUpperCase(field.fieldName) %>(entity.get<%- firstLetterUpperCase(field.fieldName) %>());
            <%_ } _%>
                  return existing<%= entity.name %>;
                 })
