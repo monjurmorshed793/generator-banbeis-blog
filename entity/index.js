@@ -81,7 +81,7 @@ module.exports = class extends Generator{
                     type: "list",
                     name: "type",
                     message: "What is the field type?",
-                    choices: ['String','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
+                    choices: ['String','LanguageType','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
                 },
                 {
                     type: "confirm",
@@ -167,7 +167,9 @@ module.exports = class extends Generator{
                 modelImportedPackages: this.modelImportedPackages,
                 modelName: this.modelName,
                 modelFields: this.modelFields,
-                entity: this.entity
+                fields: this.fields,
+                entity: this.entity,
+                containsLanguageType: this._containsLanguageType
             }
         );
     }
@@ -243,6 +245,18 @@ module.exports = class extends Generator{
 
     _firstLetterUpperCase(str){
         return str.charAt(0).toUpperCase()+ str.slice(1);
+    }
+
+    _containsLanguageType(modelFields){
+        let foundOccurance = false;
+        for(let f in modelFields){
+            if(modelFields[f].type === 'LanguageType'){
+                foundOccurance = true;
+                break;
+            }
+        }
+
+        return foundOccurance;
     }
 
 }

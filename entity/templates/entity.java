@@ -5,8 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+<%_ if (containsLanguageType(fields)) { _%>
+import <%= entity.modelDirectory %>.helper.LanguageType;
+<%_ } _%>
 <% for (const modelPackage of modelImportedPackages) { _%>
-    <%= modelPackage %>;
+<%= modelPackage %>;
 <% } _%>
 
 @Document("<%= modelName %>")
