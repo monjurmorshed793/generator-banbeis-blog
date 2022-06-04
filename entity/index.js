@@ -140,6 +140,8 @@ module.exports = class extends Generator{
         this._writeRepository();
         this._writeService();
         this._writeControllers();
+        this.entity.fields = this.fields;
+        this.config.set(this.entity.name, this.entity);
     }
 
 

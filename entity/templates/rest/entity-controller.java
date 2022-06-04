@@ -50,11 +50,11 @@ public class <%= entity.name %>Controller implements CommonController<<%= entity
         Optional<<%= entity.name %>> patched<%= entity.name %> = <%- convertToLowercase(entity.name) %>Service
                 .getById(entity.getId())
                 .map(existing<%= entity.name %>->{
-           <% for (const field of fields) { _%>
+           <%_ for (const field of fields) { _%>
                  if(entity.get<%- firstLetterUpperCase(field.name) %>() !=null )
                       existing<%= entity.name %>.set<%- firstLetterUpperCase(field.name) %>(entity.get<%- firstLetterUpperCase(field.name) %>());
-           <% } _%>
-                    return existing<%= entity.name %>;
+           <%_ } _%>
+                 return existing<%= entity.name %>;
                 })
                 .map(<%- convertToLowercase(entity.name) %>Service::createOrUpdate);
 
