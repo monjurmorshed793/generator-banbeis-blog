@@ -16,9 +16,7 @@ describe('banbeis-blog:entity', ()=>{
              'repositoryDirectory': 'bd.gov.banbeis.banbeisblog.repository',
              'serviceDirectory': 'bd.gov.banbeis.banbeisblog.service',
              'controllerDirectory': 'bd.gov.banbeis.banbeisblog.rest',
-             'confirmation': true
-          })
-          .withPrompts({
+             'confirmation': true,
               'fieldName': 'name',
               'type': 'LanguageType',
               'required': true,

@@ -51,19 +51,19 @@ module.exports = class extends Generator{
             },
         ]);
 
-/*        this.addField = await this.prompt([
+        this.addField = await this.prompt([
             {
                 type: 'confirm',
                 name: 'confirmation',
                 message: 'Want to add a field?'
             }
-        ]);*/
+        ]);
     }
 
     fieldPrompt(){
         this.log('fields--->');
         this.log(this.fields);
-        if(!this.addField || this.addField.addFieldConfirmation){
+        if(this.addField.confirmation){
             this._addFieldName();
         }
     }
@@ -81,7 +81,7 @@ module.exports = class extends Generator{
                     type: "list",
                     name: "type",
                     message: "What is the field type?",
-                    choices: ['String','LanguageType','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
+                    choices: ['String', 'LanguageType','Integer','Long','Float','Double','BigDecimal','LocalDate','Instant','ZonedDateTime','Duration','UUID','Boolean','Blob','List<String>','List<Integer>','List<Long>','List<Float>','List<Double>','List<BigDecimal>']
                 },
                 {
                     type: "confirm",
@@ -95,11 +95,11 @@ module.exports = class extends Generator{
             this.addField = await this.prompt([
                 {
                     type: 'confirm',
-                    name: 'addFieldConfirmation',
+                    name: 'confirmation',
                     message: 'Want to add a field?'
                 }
             ]);
-            if(!this.addField.addFieldConfirmation){
+            if(!this.addField.confirmation){
                 done();
                 break;
             }
@@ -108,7 +108,6 @@ module.exports = class extends Generator{
     }
 
     writeCommonFiles(){
-
         this.serviceDirectory = 'src/main/java/'+ this.entity.serviceDirectory;
         this.serviceDirectory = this.serviceDirectory.split(".").join("\/");
 
@@ -149,9 +148,7 @@ module.exports = class extends Generator{
     _writeEntity(){
         this.entityPackage = "src/main/java/"+ this.entity.modelDirectory;
         this.modelName = this.entity.name;
-        this._createModelImportedPackage();
         this._createModelFields();
-
 
         let directory = this.entityPackage.split(".").join("\/")
         directory = directory+"\/";
@@ -164,23 +161,17 @@ module.exports = class extends Generator{
             this.destinationPath(directory),
             {
                 modelPackage: this.entityPackage,
-                modelImportedPackages: this.modelImportedPackages,
                 modelName: this.modelName,
                 modelFields: this.modelFields,
                 fields: this.fields,
                 entity: this.entity,
-                containsLanguageType: this._containsLanguageType
+                containsLanguageType: this._containsLanguageType,
+                containsListType: this._containsListType
             }
         );
     }
 
-    _createModelImportedPackage(){
-        this.fields.forEach(f=>{
-           if(f.type.includes("List") && !this.modelImportedPackages.includes("import java.util.List")){
-                this.modelImportedPackages.push("import java.util.List");
-           }
-        });
-    }
+
 
     _createModelFields(){
         this.modelFields = [];
@@ -251,6 +242,21 @@ module.exports = class extends Generator{
         let foundOccurance = false;
         for(let f in modelFields){
             if(modelFields[f].type === 'LanguageType'){
+                foundOccurance = true;
+                break;
+            }
+        }
+
+        return foundOccurance;
+    }
+
+    _containsListType(modelFields){
+        let foundOccurance = false;
+        console.log('in the contains list type');
+        console.log(modelFields);
+        for(let f in modelFields){
+            console.log(modelFields[f])
+            if(modelFields[f].type.includes('List')){
                 foundOccurance = true;
                 break;
             }

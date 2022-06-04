@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 <%_ if (containsLanguageType(fields)) { _%>
 import <%= entity.modelDirectory %>.helper.LanguageType;
 <%_ } _%>
-<% for (const modelPackage of modelImportedPackages) { _%>
-<%= modelPackage %>;
-<% } _%>
+<%_ if (containsListType(fields)) { _%>
+import java.util.List;
+<%_ } _%>
 
 @Document("<%= modelName %>")
 @Data
